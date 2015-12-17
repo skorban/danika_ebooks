@@ -66,5 +66,5 @@ MyBot.new("danika_ebooks") do |bot|
   bot.access_token = "4517864127-xwOtiCkJe8zlSdquwHRtr4kxetrY70E08KVqYay" # Token connecting the app to this account
   bot.access_token_secret = "w2rCquuKuqjoWANLCgqRaW5NSv7vLSkH6ii5FFsQgC2N8" # Secret connecting the app to this account
     
-    bot.original = "danikaharrod"
+    
 end
