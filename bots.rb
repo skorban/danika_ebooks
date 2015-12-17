@@ -5,8 +5,6 @@ require 'twitter_ebooks'
 
 class MyBot < Ebooks::Bot
   # Configuration here applies to all MyBots
-  attr_accessor :original, :model, :model_path
-
   def configure
     # Consumer details come from registering an app at https://dev.twitter.com/
     # Once you have consumer details, use "ebooks auth" for new access tokens
@@ -21,24 +19,15 @@ class MyBot < Ebooks::Bot
   end
 
   def on_startup
-    load_model!
-
-    scheduler.every '24h' do
-      # Tweet something every 24 hours
-      # See https://github.com/jmettraux/rufus-scheduler
-      # tweet("hi")
-      # pictweet("hi", "cuteselfie.jpg")
-    end
-
-    scheduler.every '2m' do
-      statement = model.make_statement(140)
-      tweet(statement)
+    scheduler.every '12h' do
+        statement = model.make_statement(140)
+        tweet(statement)
     end
   end
 
   def on_message(dm)
     # Reply to a DM
-    reply(dm, "secret secrets")
+      reply(dm, "you've never even been to oovoo javer")
   end
 
   def on_follow(user)
@@ -48,17 +37,21 @@ class MyBot < Ebooks::Bot
 
   def on_mention(tweet)
     # Reply to a mention
-      statement = model.make_statement(120)
+      statement= model.make_statement(120)
       reply(tweet, statement)
   end
 
   def on_timeline(tweet)
     # Reply to a tweet in the bot's timeline
-    #  reply(tweet, "good content, my guy")
+    # reply(tweet, "nice tweet")
   end
 
-  private
-  def load_model!
+  def on_favorite(user, tweet)
+    # Follow user who just favorited bot's tweet
+    # follow(user.screen_name)
+  end
+    
+    def load_model!
     return if @model
 
     @model_path ||= "model/#{original}.model"
@@ -72,6 +65,6 @@ end
 MyBot.new("danika_ebooks") do |bot|
   bot.access_token = "4517864127-xwOtiCkJe8zlSdquwHRtr4kxetrY70E08KVqYay" # Token connecting the app to this account
   bot.access_token_secret = "w2rCquuKuqjoWANLCgqRaW5NSv7vLSkH6ii5FFsQgC2N8" # Secret connecting the app to this account
-
+    
     bot.original = "danikaharrod"
 end
